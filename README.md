@@ -1,7 +1,7 @@
-# JS/TS Base-N Id Generator _(@digitalcredentials/bnid)_
+# JS/TS Base-N Id Generator _(@interop/bnid)_
 
-[![CI](https://github.com/digitalcredentials/bnid/actions/workflows/ci.yml/badge.svg)](https://github.com/digitalcredentials/bnid/actions/workflows/ci.yml)
-[![NPM Version](https://img.shields.io/npm/v/@digitalcredentials/bnid.svg)](https://npm.im/@digitalcredentials/bnid)
+[![CI](https://github.com/interop-alliance/bnid/actions/workflows/ci.yml/badge.svg)](https://github.com/interop-alliance/bnid/actions/workflows/ci.yml)
+[![NPM Version](https://img.shields.io/npm/v/@interop/bnid.svg)](https://npm.im/@interop/bnid)
 
 > A Typescript/JavaScript library for Web browsers, React Native, and Node.js
 > apps to generate random ids and encode and decode them using various base-N
@@ -28,7 +28,7 @@ generate random ids and encode and decode them in various base-N encodings.
 ### NPM
 
 ```
-npm install @digitalcredentials/bnid
+npm install @interop/bnid
 ```
 
 ### Git
@@ -36,7 +36,7 @@ npm install @digitalcredentials/bnid
 To install locally (for development):
 
 ```
-git clone https://github.com/digitalcredentials/bnid.git
+git clone https://github.com/interop-alliance/bnid.git
 cd bnid
 pnpm install
 ```
@@ -47,7 +47,7 @@ This library is isomorphic and runs on React Native, with one environment
 requirement: it uses the Web Crypto `crypto.getRandomValues()` API to generate
 random id material, which React Native does not provide natively. Consumers must
 install the [`react-native-get-random-values`][] polyfill and import it
-**once**, before any `@digitalcredentials/bnid` code runs (typically at the very
+**once**, before any `@interop/bnid` code runs (typically at the very
 top of your app entry, e.g. `index.js`):
 
 ```sh
@@ -76,8 +76,7 @@ but any id data can be used.
 The encoder and decoder support various encodings and options:
 
 - `base16`/`hex`, `base16upper`: The simple [Base16][].
-- `base58`/`base58btc`: The [Base58][] Bitcoin alphabet as supported by
-  [base58-universal][].
+- `base58`/`base58btc`: The [Base58][] Bitcoin alphabet.
 - Optional [multibase][] type prefix.
 - Fixed bit length. This is useful to ensure the output id length is constant
   even when the id starts with an arbitrary number of zeros.
@@ -94,7 +93,7 @@ To generate a default [Base58][], 128 bit, non-fixed-length, multibase encoded
 id:
 
 ```js
-import { generateId } from '@digitalcredentials/bnid'
+import { generateId } from '@interop/bnid'
 
 const id = await generateId()
 ```
@@ -102,7 +101,7 @@ const id = await generateId()
 To generate a [Base58][], 128 bit, fixed-length id:
 
 ```js
-import { generateId } from '@digitalcredentials/bnid'
+import { generateId } from '@interop/bnid'
 
 const id = await generateId({
   fixedLength: true
@@ -115,7 +114,7 @@ Some setup overhead can be avoided by using the component `IdGenerator` and
 `IdEncoder` classes.
 
 ```js
-import { IdGenerator, IdEncoder } from 'bnid'
+import { IdGenerator, IdEncoder } from '@interop/bnid'
 
 // 64 bit random id generator
 const generator = new IdGenerator({
@@ -137,7 +136,7 @@ Some setup overhead can be avoided by using the component `IdGenerator` and
 `IdEncoder` classes.
 
 ```js
-import { IdGenerator, IdEncoder, IdDecoder } from '@digitalcredentials/bnid'
+import { IdGenerator, IdEncoder, IdDecoder } from '@interop/bnid'
 
 // 64 bit random id generator
 const generator = new IdGenerator({
@@ -263,7 +262,7 @@ can be stored and later used to generate a key pair. The public key from the key
 pair can be used as an identifier. The encoded key seed MUST be kept secret.
 
 ```js
-import { generateSecretKeySeed } from '@digitalcredentials/bnid'
+import { generateSecretKeySeed } from '@interop/bnid'
 
 const secretKeySeed = await generateSecretKeySeed()
 // Example secretKeySeed: z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD
@@ -283,7 +282,7 @@ Decodes an encoded secret key seed into an array of secret key seed bytes
 be kept secret.
 
 ```js
-import { decodeSecretKeySeed } from '@digitalcredentials/bnid'
+import { decodeSecretKeySeed } from '@interop/bnid'
 
 const secretKeySeed = 'z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD'
 decoded = decodeSecretKeySeed({ secretKeySeed })
@@ -327,5 +326,4 @@ If editing the README, please conform to the
 [Base58]: https://en.wikipedia.org/wiki/Base58
 [TextDecoder]: https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder
 [TextEncoder]: https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder
-[base58-universal]: https://github.com/digitalcredentials/base58-universal
 [multibase]: https://github.com/multiformats/multibase

@@ -1,5 +1,5 @@
 {
-  "name": "@digitalcredentials/bnid",
+  "name": "@interop/bnid",
   "version": "5.0.0",
   "description": "Base-N Id Generator",
   "license": "BSD-3-Clause",
@@ -17,13 +17,13 @@
     "test:node": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
-  "homepage": "https://github.com/digitalcredentials/bnid",
+  "homepage": "https://github.com/interop-alliance/bnid",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitalcredentials/bnid.git"
+    "url": "git+https://github.com/interop-alliance/bnid.git"
   },
   "bugs": {
-    "url": "https://github.com/digitalcredentials/bnid/issues"
+    "url": "https://github.com/interop-alliance/bnid/issues"
   },
   "files": [
     "dist",
