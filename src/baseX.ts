@@ -1,4 +1,3 @@
-import baseX from 'base-x'
+import { base58 } from '@scure/base'
 
-const BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
-export const base58btc = baseX(BASE58)
+export const base58btc = base58

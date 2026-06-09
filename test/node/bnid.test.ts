@@ -2,6 +2,7 @@
  * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import assert from 'node:assert/strict'
+import { describe, it } from 'vitest'
 
 import {
   IdEncoder,
@@ -13,7 +14,7 @@ import {
   maxEncodedIdBytes,
   generateSecretKeySeed,
   decodeSecretKeySeed
-} from '../src/index.js'
+} from '../../src/index.js'
 
 describe('bnid', () => {
   describe('utilities', () => {
@@ -32,7 +33,7 @@ describe('bnid', () => {
         ]
       ]
 
-      function t ({
+      function t({
         name,
         f,
         encoding,
@@ -221,7 +222,11 @@ describe('bnid', () => {
       })
 
       it('should b16 encode fixed input data', async () => {
-        const e = new IdEncoder({ encoding: 'base16', fixedLength: true, multibase: false })
+        const e = new IdEncoder({
+          encoding: 'base16',
+          fixedLength: true,
+          multibase: false
+        })
         const data: Array<[Uint8Array, string]> = [
           [new Uint8Array([0x00, 0x00]), '0000'],
           [new Uint8Array([0x00, 0x01]), '0001'],
@@ -235,7 +240,11 @@ describe('bnid', () => {
       })
 
       it('should b16 encode fixed size data', async () => {
-        const e = new IdEncoder({ encoding: 'base16', fixedBitLength: 32, multibase: false })
+        const e = new IdEncoder({
+          encoding: 'base16',
+          fixedBitLength: 32,
+          multibase: false
+        })
         const data: Array<[Uint8Array, string]> = [
           [new Uint8Array([0x00, 0x00]), '00000000'],
           [new Uint8Array([0x00, 0x01]), '00000001'],
@@ -255,7 +264,9 @@ describe('bnid', () => {
           new Uint8Array([0x00, 0x00, 0x00, 0x00])
         ]
         for (const input of inputs) {
-          assert.throws(() => { e.encode(input) })
+          assert.throws(() => {
+            e.encode(input)
+          })
         }
       })
     })
@@ -339,7 +350,9 @@ describe('bnid', () => {
           [0x00, 0x00, 0x00, 0x00]
         ]
         for (const input of inputs) {
-          assert.throws(() => { e.encode(new Uint8Array(input)) })
+          assert.throws(() => {
+            e.encode(new Uint8Array(input))
+          })
         }
       })
     })
@@ -354,17 +367,23 @@ describe('bnid', () => {
 
       it('should not decode empty multibase data', async () => {
         const d = new IdDecoder()
-        assert.throws(() => { d.decode('') })
+        assert.throws(() => {
+          d.decode('')
+        })
       })
 
       it('should not decode invalid multibase data', async () => {
         const d = new IdDecoder()
-        assert.throws(() => { d.decode('@0000') })
+        assert.throws(() => {
+          d.decode('@0000')
+        })
       })
 
       it('should reject invalid encoding', async () => {
         const d = new IdDecoder({ encoding: 'baseBogus', multibase: false })
-        assert.throws(() => { d.decode('00') })
+        assert.throws(() => {
+          d.decode('00')
+        })
       })
     })
 
@@ -403,8 +422,10 @@ describe('bnid', () => {
           [[0xab, 0xcd], 'abcd'],
           [[0x98, 0x76], '9876'],
           [[0x12, 0x34, 0x56], '123456'],
-          [[0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef],
-            '0123456789abcdef'],
+          [
+            [0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef],
+            '0123456789abcdef'
+          ],
           // TODO: more strict upper/lower for base16 encodings?
           [[0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef], '0123456789ABCDEF']
         ]
@@ -415,7 +436,11 @@ describe('bnid', () => {
       })
 
       it('should b16 decode fixed size data', async () => {
-        const d = new IdDecoder({ encoding: 'base16', fixedBitLength: 16, multibase: false })
+        const d = new IdDecoder({
+          encoding: 'base16',
+          fixedBitLength: 16,
+          multibase: false
+        })
         const data: Array<[number[], string]> = [
           [[0x00, 0x00], '00'],
           [[0x00, 0x01], '01'],
@@ -451,7 +476,9 @@ describe('bnid', () => {
         const d = new IdDecoder({ encoding: 'base16', multibase: false })
         const data = ['0', '000']
         for (const input of data) {
-          assert.throws(() => { d.decode(input) })
+          assert.throws(() => {
+            d.decode(input)
+          })
         }
       })
 
@@ -459,7 +486,9 @@ describe('bnid', () => {
         const d = new IdDecoder({ encoding: 'base16', fixedBitLength: 16 })
         const data = ['010203']
         for (const input of data) {
-          assert.throws(() => { d.decode(input) })
+          assert.throws(() => {
+            d.decode(input)
+          })
         }
       })
     })
@@ -537,7 +566,9 @@ describe('bnid', () => {
         const d = new IdDecoder({ multibase: false })
         const data = ['0', 'O', 'I', 'l']
         for (const input of data) {
-          assert.throws(() => { d.decode(input) })
+          assert.throws(() => {
+            d.decode(input)
+          })
         }
       })
 
@@ -545,7 +576,9 @@ describe('bnid', () => {
         const d = new IdDecoder({ fixedBitLength: 16 })
         const data = ['zfxr']
         for (const input of data) {
-          assert.throws(() => { d.decode(input) })
+          assert.throws(() => {
+            d.decode(input)
+          })
         }
       })
     })
@@ -575,7 +608,11 @@ describe('bnid', () => {
     })
 
     it('should generate 256 bit fixed length id', async () => {
-      const id = await generateId({ bitLength: 256, fixedLength: true, multibase: false })
+      const id = await generateId({
+        bitLength: 256,
+        fixedLength: true,
+        multibase: false
+      })
       assert.ok(typeof id === 'string')
       assert.equal(id.length, 44)
     })
@@ -589,7 +626,11 @@ describe('bnid', () => {
         [[0xff, 0x00, 0xff, 0x00], 'ff00ff00']
       ]
       for (const [expected, input] of data) {
-        const decoded = decodeId({ id: input, encoding: 'base16', multibase: false })
+        const decoded = decodeId({
+          id: input,
+          encoding: 'base16',
+          multibase: false
+        })
         assert.deepEqual(decoded, new Uint8Array(expected))
       }
     })
@@ -605,7 +646,11 @@ describe('bnid', () => {
         [[0x00, 0x00, 0x01], '112']
       ]
       for (const [expected, input] of data) {
-        const decoded = decodeId({ id: input, encoding: 'base58', multibase: false })
+        const decoded = decodeId({
+          id: input,
+          encoding: 'base58',
+          multibase: false
+        })
         assert.deepEqual(decoded, new Uint8Array(expected))
       }
     })
@@ -665,7 +710,9 @@ describe('bnid', () => {
       }
       assert.ok(secretKeySeed)
       assert.ok(!err)
-      if (!secretKeySeed) throw new Error('unreachable')
+      if (!secretKeySeed) {
+        throw new Error('unreachable')
+      }
       assert.ok(typeof secretKeySeed === 'string')
       assert.equal(secretKeySeed.length, 47)
     })
@@ -682,17 +729,17 @@ describe('bnid', () => {
       assert.ok(secretKeySeed)
       assert.ok(!err)
       assert.ok(typeof secretKeySeed === 'string')
-      if (!secretKeySeed) throw new Error('unreachable')
+      if (!secretKeySeed) {
+        throw new Error('unreachable')
+      }
       assert.equal(secretKeySeed.length, 61)
     })
 
     it('should decode secret key seed', async () => {
       const secretKeySeed = 'z1Abn5R8HRLXKJvLQP1AzxFBGX2D1YdCo5d5BvvNw73nMzv'
       const expected = new Uint8Array([
-        80, 174, 15, 131, 124, 59, 9, 51,
-        145, 129, 92, 157, 157, 172, 161, 79,
-        74, 61, 152, 152, 48, 151, 20, 89,
-        225, 169, 71, 34, 49, 61, 21, 215
+        80, 174, 15, 131, 124, 59, 9, 51, 145, 129, 92, 157, 157, 172, 161, 79,
+        74, 61, 152, 152, 48, 151, 20, 89, 225, 169, 71, 34, 49, 61, 21, 215
       ])
       let decoded: Uint8Array | null = null
       let err: any
@@ -713,11 +760,9 @@ describe('bnid', () => {
         'z146fHWeH32ZP1cCG3dz2ZemzvZjPcj5ycsFFanAB6X1frDDxmoAocPx5RC3A'
       const expectedSize = 42
       const expected = new Uint8Array([
-        12, 221, 206, 72, 148, 144, 98, 171, 251,
-        157, 183, 76, 211, 255, 124, 101, 204, 77,
-        32, 220, 135, 90, 102, 87, 222, 55, 82,
-        154, 164, 35, 115, 242, 173, 73, 109, 91,
-        252, 206, 191, 108, 215, 105
+        12, 221, 206, 72, 148, 144, 98, 171, 251, 157, 183, 76, 211, 255, 124,
+        101, 204, 77, 32, 220, 135, 90, 102, 87, 222, 55, 82, 154, 164, 35, 115,
+        242, 173, 73, 109, 91, 252, 206, 191, 108, 215, 105
       ])
       let decoded: Uint8Array | null = null
       let err: any
