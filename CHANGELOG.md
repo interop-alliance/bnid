@@ -1,9 +1,10 @@
 # bnid ChangeLog
 
-## 6.0.0 - TBD
+## 6.0.0 - 2026-06-08
 
 ### Changed
 
+- **BREAKING**: Fork to `@interop/bnid`.
 - **BREAKING**: Replace `base-x` dependency with `@scure/base` (`base58`).
 - **BREAKING**: React Native now uses the Web Crypto `crypto.getRandomValues()`
   API instead of `react-native-securerandom`. Consumers must install the
