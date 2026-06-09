@@ -1,5 +1,8 @@
 *.log
 *.sw[nop]
+_spec
+playwright-report
+test-results
 *~
 .DS_Store
 .cache

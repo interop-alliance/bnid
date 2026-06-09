@@ -1,5 +1,0 @@
-declare module 'chai'
-declare module 'assert'
-declare module 'assert/strict'
-declare module 'node:assert'
-declare module 'node:assert/strict'
